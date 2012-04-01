@@ -1,0 +1,13 @@
+#  Installs Forban for Openwrt-Piratebox.
+# (c)2012 Matthias Strubel  matthias.strubel@aod-rpg.de
+#  Licenced under GPL-3
+
+Forban: adulau/Forban
+
+Depends on mkPirateBox. MkPirateBox installs Python, which is needed for Forban.
+
+The following steps will be done:
+  * Fetch current Version of Forban 
+  * Basic configure Forban in relation to mkPirateBox
+  * Pack an Imagefile together
+

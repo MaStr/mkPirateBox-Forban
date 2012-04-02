@@ -1,0 +1,13 @@
+Package: piratebox-forban
+Version: 0.1
+Depends: piratebox
+Provides: 
+Source: package/piratebox-forban
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: Matthias Strubel  <matthias.strubel@aod-rpg.de>
+Architecture: all
+Installed-Size: 101
+Description: Installs Forban http://www.foo.be/forban/ to OpenWRT - offers possibility of automatic redistribution of files

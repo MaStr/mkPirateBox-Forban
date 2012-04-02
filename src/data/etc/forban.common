@@ -1,0 +1,149 @@
+#############################################################################
+# Forban-Priratebox global config. /etc/init.d/piratebox setup to take effect
+
+. /etc/piratebox.common
+
+forban_mount="/opt/forban"
+forban_srcImg_url="http://piratebox.aod-rpg.de/forban_img.gz"
+forban_img="$pb_usbdir/forbanIMG.img"
+forban_srcimg="$pb_usbmount/forban_img.gz"
+forban_share="$pb_share" 
+forban_config="/usr/share/forban/forban.cfg"
+forban_work_var="/var/forban"
+
+
+#############################################################################
+# Forban helper functions
+
+
+forban_ismounted() {
+  mount | grep "on $1 " >/dev/null
+}
+
+forban_mount() {
+  parts=$*
+  [ "$parts" == "-a" ] && parts="ext forban"
+  for part in $*
+  do
+    case $part in
+      ext)
+	  pb_mount ext
+      forban) 
+          forban_ismounted "$forban_mount" && continue
+	  forban_mount ext
+	  [ -d "$forban_mount" ] || mkdir -p "$forban_mount"
+	  if ! mount -o loop,rw,sync "$forban_img" "$forban_mount"
+	  then
+	    echo "${initscript}: ERROR: unable to mount forban image" >&2
+	    exit 5
+	  fi
+	  ;;
+    esac
+  done
+}
+
+forban_umount() {
+  parts=$*
+  [ "$parts" == "-a" ] && parts="forban"
+  for part in $*
+  do
+    case $part in
+      forban)
+          losetup -d /dev/loop2 &>/dev/null
+	  pb_ismounted "$forban_mount" || continue
+	  if ! umount "$forban_mount"
+	  then 
+	     forban_stop &>/dev/null
+	     sleep 2
+	      if ! umount "$forban_mount"
+	      then
+	        echo "${initscript}: WARNING: unable to umount forban image" >&2
+	     fi
+	  fi
+	  losetup -d /dev/loop2
+	  ;;
+    esac
+  done
+}
+
+forban_undoconfig() {
+  # undo config changes
+  uci delete fstab.forbanimage
+  uci commit
+  [ -d "forban_mount" ] && rmdir "$forban_mount"
+}
+
+
+
+forban_mkimg () {
+   pb_umount forban
+   pb_mount  ext
+   [ -d "$(dirname $forban_mount )" ] || mkdir -p "$(dirname $forban_mount)"
+   if [ ! -e $forban_srcimg  ] ; then
+      echo "No Forban Image file found... loading from Internet"
+      wget -O $forban_srcimg  $forban_srcImg_url
+      if [ ! -e $forban_srcimg ] ; then
+         echo "wget failed... cancel"
+	 exit 5
+      fi
+   fi
+   gzip -dc  "$forban_srcimg" > "$forban_img" 
+   pb_uciset fstab forbanimage mount \
+        target=$forban_mount \
+	device=$forban_img" \
+	options=loop \
+	enabled=1
+}
+
+forban_init() {
+
+  echo "${initscript}: Creating Forban loop image..."
+  forban_mkimg
+
+}
+
+forban_update() {
+  forban_mount ext
+
+  #disable redirection.
+  pb_nodns
+
+}
+
+#Removes current image file and overwrite it with new one
+forban_updateImage () { 
+    forban_umount forban
+    rm "$forban_img"
+    forban_mkimg
+}
+
+
+forban_start() {
+  forban_mount ext forban
+
+  export PATH=$PATH:/usr/local/bin
+  export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+
+  mkdir -p $pb_share
+
+  #Stopping Watchdog for smooth startup
+  /etc/init.d/watchdog stop
+
+  mkdir -p $forban_work_var
+  cp -rv  $forban_mount/var/share $forban_work_var
+  $forban_mount/bin/forbanctl start
+
+  echo "Waiting 15 sec. startup... for enabling watchdog again"
+  sleep 15 
+  /etc/init.d/watchdog start
+}
+
+forban_stop() {
+  # killing all piratebox processes
+
+   $forban_mount/bin/forbanctl stop
+
+  sleep 5
+  forban_umount forban
+}
+

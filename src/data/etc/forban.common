@@ -108,6 +108,30 @@ forban_update() {
   #disable redirection.
   pb_nodns
 
+  # CAVE: ugly hack
+  # in case we were called from the postinst, remove opkg lock
+  [ -e /var/lock/opkg.lock ] && \
+    mv /var/lock/opkg.lock /var/lock/opkg.lock_
+
+
+  echo "Installing python from repository"
+  if ! opkg update
+  then
+      echo "${initscript}: ERROR: No Internet connection on WAN port" >&2
+      exit 5
+  fi  
+  opkg -d piratebox install libopenssl
+  opkg -d piratebox install python-openssl
+  opkg -d piratebox install pyopenssl
+  
+
+
+  # CAVE: ugly hack
+  # in case we were called from the postinst, restore opkg lock
+  [ -e /var/lock/opkg.lock_ ] && \
+    mv /var/lock/opkg.lock_ /var/lock/opkg.lock
+
+
 }
 
 #Removes current image file and overwrite it with new one

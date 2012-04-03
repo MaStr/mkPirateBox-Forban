@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. /etc/forban.common
+
+/etc/init.d/forban enable
+/etc/init.d/forban init
+/etc/init.d/forban update
+
+/etc/init.d/forban start

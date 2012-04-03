@@ -155,6 +155,9 @@ forban_start() {
 
   mkdir -p $forban_work_var
   cp -rv  $forban_mount/var/share $forban_work_var
+ 
+  ln -s $forban_share  $forban_work_var/PirateBox_Share
+
   $forban_mount/bin/forbanctl start
 
   echo "Waiting 15 sec. startup... for enabling watchdog again"

@@ -1,0 +1,49 @@
+#!/bin/sh /etc/rc.common
+
+NAME=forban
+START=90
+STOP=10
+EXTRA_COMMANDS="setup init update nodns updateImage"
+EXTRA_HELP="	setup	Activate current USB and network configuration
+	init	     Mount USB, and PirateBoxify a fresh USB disk
+	update	     Update Python-dependency files on USB disk (and refresh packages)
+        updateImage  Updates only Forban files from USB stick Image-File
+	nodns	     Disable local DNS redirection through dnsmasq"
+
+# include PirateBox shared functionality
+. /etc/forban.common
+
+setup() {
+
+}
+
+init() {
+  forban_init
+}
+
+update() {
+  forban_update
+}
+
+#nodns() {
+#  pb_nodns
+#}
+
+updateImage () {
+  forban_updateImage 
+}
+
+mountForban () {
+   forban_mount forban
+}
+
+start() {
+  forban_mount forban
+
+  forban_start
+}
+
+stop() {
+  forban_stop
+}
+

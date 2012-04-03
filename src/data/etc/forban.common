@@ -98,7 +98,7 @@ forban_mkimg () {
 forban_init() {
 
   echo "${initscript}: Creating Forban loop image..."
-  forban_mkimg
+  forban_updateImage
 
 }
 

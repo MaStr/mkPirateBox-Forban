@@ -8,7 +8,6 @@ forban_srcImg_url="http://piratebox.aod-rpg.de/forban_img.gz"
 forban_img="$pb_usbdir/forbanIMG.img"
 forban_srcimg="$pb_usbmount/forban_img.gz"
 forban_share="$pb_share" 
-forban_config="/usr/share/forban/forban.cfg"
 forban_work_var="/var/forban"
 
 
@@ -28,6 +27,7 @@ forban_mount() {
     case $part in
       ext)
 	  pb_mount ext
+	  ;;
       forban) 
           forban_ismounted "$forban_mount" && continue
 	  forban_mount ext
@@ -76,8 +76,8 @@ forban_undoconfig() {
 
 
 forban_mkimg () {
-   pb_umount forban
-   pb_mount  ext
+   forban_umount forban
+   forban_mount  ext
    [ -d "$(dirname $forban_mount )" ] || mkdir -p "$(dirname $forban_mount)"
    if [ ! -e $forban_srcimg  ] ; then
       echo "No Forban Image file found... loading from Internet"
@@ -89,8 +89,8 @@ forban_mkimg () {
    fi
    gzip -dc  "$forban_srcimg" > "$forban_img" 
    pb_uciset fstab forbanimage mount \
-        target=$forban_mount \
-	device=$forban_img" \
+        target="$forban_mount" \
+	device="$forban_img" \
 	options=loop \
 	enabled=1
 }

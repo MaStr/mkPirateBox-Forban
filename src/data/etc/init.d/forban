@@ -14,7 +14,7 @@ EXTRA_HELP="	setup	Activate current USB and network configuration
 . /etc/forban.common
 
 setup() {
-
+ echo ""
 }
 
 init() {

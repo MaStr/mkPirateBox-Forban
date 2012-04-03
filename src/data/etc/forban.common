@@ -8,7 +8,7 @@ forban_srcImg_url="http://piratebox.aod-rpg.de/forban_img.gz"
 forban_img="$pb_usbdir/forbanIMG.img"
 forban_srcimg="$pb_usbmount/forban_img.gz"
 forban_share="$pb_share" 
-forban_work_var="/var/forban"
+forban_work_var="/tmp/forban"
 
 
 #############################################################################
@@ -154,15 +154,18 @@ forban_start() {
   /etc/init.d/watchdog stop
 
   mkdir -p $forban_work_var
-  cp -rv  $forban_mount/var/share $forban_work_var
+  cp -rv  $forban_mount/var/share/* $forban_work_var
  
-  ln -s $forban_share  $forban_work_var/PirateBox_Share
+  [ ! -e $forban_work_var/PirateBox_Share ] && \
+	ln -s $forban_share  $forban_work_var/PirateBox_Share
 
+  cd $forban_mount
   $forban_mount/bin/forbanctl start
 
-  echo "Waiting 15 sec. startup... for enabling watchdog again"
-  sleep 15 
-  /etc/init.d/watchdog start
+# Disabled ... don't know what to do with :(
+#  echo "Waiting 15 sec. startup... for enabling watchdog again"
+#  sleep 15 
+#  /etc/init.d/watchdog start
 }
 
 forban_stop() {

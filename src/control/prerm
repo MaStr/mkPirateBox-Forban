@@ -1,0 +1,9 @@
+#!/bin/sh
+
+. /etc/forban.common
+
+/etc/init.d/forban disable
+/etc/init.d/forban stop
+
+
+forban_undoconfig

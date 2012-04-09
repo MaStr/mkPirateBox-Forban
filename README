@@ -20,6 +20,14 @@ Default configuration contains the following things:
   * Announceintervall is reduced to "only 60" seconds
   * Indexrebuild every 5 anouncements ( 5 Minutes )
 
+Keep in mind:
+  * Forban is a very heavy peace of software and you Box WILL slow down!
+  * Because of this the boot-up time will increase !
+
+Installation:
+  * See: https://github.com/MaStr/mkPirateBox-Forban/wiki/Install-Forban-on-your-OpenWRT 
+
+
 Why is Forban running in shared mode on default (the following stuff is written in optimistic view, that PB-Mesh works quite well) ?
   * Harvest everything might create law trouble with content you really not want (i.e. Porno (and that is the not so problematic stuff))
   * If every Box runs in opportunistic mode, so that every box redistributes the downloaded files, you won't be able to remove the unwanted stuff.

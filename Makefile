@@ -6,6 +6,7 @@ GITFILE = forban.zip
 WGET = wget -c
 FORBANFOLDER = forban-src
 IMAGE_FILE=forban_img.gz
+IMAGE_FILE_TGZ=forban_img.tar.gz
 SRC_IMAGE=image_stuff/OpenWRT.img.gz
 SRC_IMAGE_UNPACKED=image_stuff/forban_img
 MOUNT_POINT=image_stuff/image
@@ -57,10 +58,11 @@ $(IMAGE_FILE): $(SRC_IMAGE_UNPACKED)
 	su -c "umount  $(MOUNT_POINT)"
 	gzip -rc $(SRC_IMAGE_UNPACKED) > $(IMAGE_FILE)
 
+$(IMAGE_FILE_TGZ): 
+	tar czf $(IMAGE_FILE_TGZ)  $(SRC_IMAGE_UNPACKED) 
+
 $(SRC_IMAGE_UNPACKED): 
 	gunzip -dc $(SRC_IMAGE) >  $(SRC_IMAGE_UNPACKED)
-
-	
 
 cleanpackage: 
 	- rm -rv  $(FORBANFOLDER) 
@@ -83,7 +85,7 @@ ipk:  $(IPK)
 
 image:  $(GITFILE) shortimage
 
-shortimage: $(IMAGE_FILE)
+shortimage: $(IMAGE_FILE) $(IMAGE_FILE_TGZ) 
 
 .PHONY: all image ipk clean shortimage
 

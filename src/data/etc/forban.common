@@ -4,11 +4,11 @@
 . /etc/piratebox.common
 
 forban_mount="/opt/forban"
-forban_srcImg_url="http://piratebox.aod-rpg.de/forban_img.gz"
+forban_srcImg_url="http://piratebox.aod-rpg.de/forban_img.tar.gz"
 forban_img="$pb_usbdir/forbanIMG.img"
-forban_srcimg="$pb_usbmount/forban_img.gz"
+forban_srcimg="$pb_usbmount/forban_img.tar.gz"
 forban_share="$pb_share" 
-forban_work_var="/tmp/forban"
+forban_share_folder="$forban_mount/var/share"
 
 
 #############################################################################
@@ -87,7 +87,7 @@ forban_mkimg () {
 	 exit 5
       fi
    fi
-   gzip -dc  "$forban_srcimg" > "$forban_img" 
+   tar xzO -f  "$forban_srcimg" > "$forban_img" 
    pb_uciset fstab forbanimage mount \
         target="$forban_mount" \
 	device="$forban_img" \
@@ -153,13 +153,11 @@ forban_start() {
   #Stopping Watchdog for smooth startup
   /etc/init.d/watchdog stop
 
-  mkdir -p $forban_work_var
-  cp -rv  $forban_mount/var/share/* $forban_work_var
- 
-  [ ! -e $forban_work_var/PirateBox_Share ] && \
-	ln -s $forban_share  $forban_work_var/PirateBox_Share
+  [ ! -e $forban_share_folder/PirateBox_Share ] && \
+	ln -s $forban_share  $forban_share_folder/PirateBox_Share
 
   cd $forban_mount
+  $forban_mount/bin/forbanctl cleanup  
   $forban_mount/bin/forbanctl start
 
 # Disabled ... don't know what to do with :(

@@ -6,8 +6,25 @@ Forban: adulau/Forban
 
 Depends on mkPirateBox. MkPirateBox installs Python, which is needed for Forban.
 
-The following steps will be done:
+The following steps will be done with the Makefile:
   * Fetch current Version of Forban 
   * Basic configure Forban in relation to mkPirateBox
   * Pack an Imagefile together
 
+Default configuration contains the following things:
+  * Forban folder only has 20MB spacc
+  * Link to PirateBox-Share is created on startup
+  * logging is running in INFO mode
+  * loggingsizemax 1000
+  * Default running mode is "shared"
+  * Announceintervall is reduced to "only 60" seconds
+  * Indexrebuild every 5 anouncements ( 5 Minutes )
+
+Why is Forban running in shared mode on default (the following stuff is written in optimistic view, that PB-Mesh works quite well) ?
+  * Harvest everything might create law trouble with content you really not want (i.e. Porno (and that is the not so problematic stuff))
+  * If every Box runs in opportunistic mode, so that every box redistributes the downloaded files, you won't be able to remove the unwanted stuff.
+  * You have still the possibility to enable the oppurtunistice mode if you want
+  * You will see the other forban-PirateBox in an overview and you are able to access them directly for downloading files.
+
+
+Switching to opportunistic mode?

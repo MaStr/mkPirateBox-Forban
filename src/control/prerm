@@ -2,6 +2,8 @@
 
 . /etc/forban.common
 
+forban_mount forban
+
 /etc/init.d/forban disable
 /etc/init.d/forban stop
 

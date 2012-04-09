@@ -1,4 +1,4 @@
-VERSION = 0.1
+VERSION = 0.2
 NAME = piratebox-forban
 ARCH = all
 GITURL = "https://github.com/adulau/Forban/zipball/master"
@@ -76,7 +76,8 @@ clean: cleanpackage cleanbuild cleanimage
 
 cleanimage:
 	- rm -f $(SRC_IMAGE_UNPACKED)
-#	- rm -v $(IMAGE_FILE) 
+	- rm -f $(IMAGE_FILE_TGZ)
+	- rm -v $(IMAGE_FILE) 
 
  
 all: image $(IPK)

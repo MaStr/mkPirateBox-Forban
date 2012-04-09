@@ -21,7 +21,7 @@ Default configuration contains the following things:
   * Indexrebuild every 5 anouncements ( 5 Minutes )
 
 Keep in mind:
-  * Forban is a very heavy peace of software and you Box WILL slow down!
+  * Forban is a very heavy piece of software and you Box WILL slow down!
   * Because of this the boot-up time will increase !
 
 Installation:

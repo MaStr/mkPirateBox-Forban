@@ -49,13 +49,13 @@ $(GITFILE):  $(FORBANFOLDER)
 
 $(IMAGE_FILE): $(SRC_IMAGE_UNPACKED) 
 	echo "#### Mounting image-file"
-	su -c "mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)"
+	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
 	echo "#### Copy content to image file"
-	su -c "	cp -vr $(FORBANFOLDER)/*  $(MOUNT_POINT)     "
+	sudo  	cp -vr $(FORBANFOLDER)/*  $(MOUNT_POINT)     
 	echo "#### Copy customizatiosns to image file"
-	su -c " cp -vr $(CUSTOM_MOD_FOLDER)/* $(MOUNT_POINT) "
+	sudo   cp -vr $(CUSTOM_MOD_FOLDER)/* $(MOUNT_POINT) 
 	echo "#### Umount Image file"
-	su -c "umount  $(MOUNT_POINT)"
+	sudo  umount  $(MOUNT_POINT)
 	gzip -rc $(SRC_IMAGE_UNPACKED) > $(IMAGE_FILE)
 
 $(IMAGE_FILE_TGZ): 

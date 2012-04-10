@@ -9,3 +9,5 @@ forban_mount forban
 
 
 forban_undoconfig
+
+/etc/init.d/watchdog enable

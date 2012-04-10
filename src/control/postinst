@@ -6,4 +6,7 @@
 /etc/init.d/forban init
 /etc/init.d/forban update
 
+#Disable Watchdog.
+/etc/init.d/watchdog disable
+
 /etc/init.d/forban start

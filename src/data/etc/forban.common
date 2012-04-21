@@ -159,7 +159,7 @@ forban_start() {
   cd $forban_mount
   $forban_mount/bin/forbanctl cleanup  
   $forban_mount/bin/forbanctl lootcleanup
-  $forban_mount/bin/forbanctl start
+  nice -n 20 $forban_mount/bin/forbanctl start
 
 # Disabled ... don't know what to do with :(
 #  echo "Waiting 15 sec. startup... for enabling watchdog again"
@@ -170,7 +170,7 @@ forban_start() {
 forban_stop() {
   # killing all piratebox processes
 
-   $forban_mount/bin/forbanctl stop
+  $forban_mount/bin/forbanctl stop
 
   sleep 5
   forban_umount forban

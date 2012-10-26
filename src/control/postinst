@@ -6,6 +6,9 @@
 /etc/init.d/forban init
 /etc/init.d/forban update
 
+
+forban_install_rclocal
+
 #Disable Watchdog.
 /etc/init.d/watchdog disable
 

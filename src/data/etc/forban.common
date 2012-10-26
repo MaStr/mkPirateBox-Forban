@@ -10,6 +10,11 @@ forban_srcimg="$pb_usbmount/forban_img.tar.gz"
 forban_share="$pb_share" 
 forban_share_folder="$forban_mount/var/share"
 
+#Empty out Forban's cache about found hosts
+forban_reset_loot="no"
+
+#Resets PIDs
+forban_clean_up="yes" 
 
 #############################################################################
 # Forban helper functions
@@ -142,6 +147,26 @@ forban_updateImage () {
 }
 
 
+# Triggers cleanup process - will be called at boottime
+forban_cleanup() {
+  forban_mount ext forban
+  
+  export PATH=$PATH:/usr/local/bin
+  export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+  $forban_mount/bin/forbanctl cleanup
+
+}
+
+
+# Adds a few lines to rc.local
+forban_install_rclocal() {
+   cmd=" [ -e /etc/init.d/forban ] && /etc/init.d/forban cleanup ] "
+   echo "#----------------------  Forban Start " >> /etc/rc.local
+   echo $cmd >> /etc/rc.local
+   echo "#----------------------  Forban End "  >> /etc/rc.local
+}
+
+
 forban_start() {
   forban_mount ext forban
 
@@ -157,8 +182,15 @@ forban_start() {
 	ln -s $forban_share  $forban_share_folder/PirateBox_Share
 
   cd $forban_mount
-  $forban_mount/bin/forbanctl cleanup  
-  $forban_mount/bin/forbanctl lootcleanup
+
+  if [ "$forban_clean_up" = "yes"] ; then
+      $forban_mount/bin/forbanctl cleanup  
+  fi
+
+  if [ "$forban_reset_loot" = "yes" ] ; then
+      $forban_mount/bin/forbanctl lootcleanup
+  fi
+
   nice -n 20 $forban_mount/bin/forbanctl start
 
 # Disabled ... don't know what to do with :(

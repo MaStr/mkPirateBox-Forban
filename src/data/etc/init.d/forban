@@ -1,14 +1,16 @@
 #!/bin/sh /etc/rc.common
 
 NAME=forban
-START=90
+START=98
 STOP=10
-EXTRA_COMMANDS="setup init update nodns updateImage"
+EXTRA_COMMANDS="setup init update nodns updateImage cleanup"
 EXTRA_HELP="	setup	Activate current USB and network configuration
 	init	     Mount USB, and PirateBoxify a fresh USB disk
 	update	     Update Python-dependency files on USB disk (and refresh packages)
         updateImage  Updates only Forban files from USB stick Image-File
-	nodns	     Disable local DNS redirection through dnsmasq"
+	nodns	     Disable local DNS redirection through dnsmasq
+	cleanup        Resets PID Files
+	"
 
 # include PirateBox shared functionality
 . /etc/forban.common
@@ -47,3 +49,7 @@ stop() {
   forban_stop
 }
 
+cleanup() {
+   forban_cleanup
+
+}

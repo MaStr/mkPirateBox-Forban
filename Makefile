@@ -1,4 +1,4 @@
-VERSION = 0.2.1
+VERSION = 0.2.2
 NAME = piratebox-forban
 ARCH = all
 GITURL = "https://github.com/adulau/Forban/zipball/master"

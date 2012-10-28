@@ -144,6 +144,7 @@ forban_updateImage () {
     forban_umount forban
     rm "$forban_img"
     forban_mkimg
+    echo "Update done!"
 }
 
 
@@ -160,10 +161,12 @@ forban_cleanup() {
 
 # Adds a few lines to rc.local
 forban_install_rclocal() {
-   cmd=" [ -e /etc/init.d/forban ] && /etc/init.d/forban cleanup ] "
+   cmd=" [ -e /etc/init.d/forban ] && /etc/init.d/forban cleanup  "
    echo "#----------------------  Forban Start " >> /etc/rc.local
    echo $cmd >> /etc/rc.local
    echo "#----------------------  Forban End "  >> /etc/rc.local
+    sed  's:exit:#exit:g' -i /etc/rc.local
+
 }
 
 

@@ -186,11 +186,11 @@ forban_start() {
 
   cd $forban_mount
 
-  if [ "$forban_clean_up" = "yes"] ; then
+  if [ "$forban_clean_up" == "yes"] ; then
       $forban_mount/bin/forbanctl cleanup  
   fi
 
-  if [ "$forban_reset_loot" = "yes" ] ; then
+  if [ "$forban_reset_loot" == "yes" ] ; then
       $forban_mount/bin/forbanctl lootcleanup
   fi
 

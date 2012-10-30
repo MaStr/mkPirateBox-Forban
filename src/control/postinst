@@ -12,4 +12,5 @@ forban_install_rclocal
 #Disable Watchdog.
 /etc/init.d/watchdog disable
 
-/etc/init.d/forban start
+# Do not start on default
+#/etc/init.d/forban start

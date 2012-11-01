@@ -1,8 +1,8 @@
-VERSION = 0.2.2
+VERSION = 0.33.1
 NAME = piratebox-forban
 ARCH = all
-GITURL = "https://github.com/adulau/Forban/zipball/master"
-GITFILE = forban.zip
+GITURL = "http://www.foo.be/forban/release/forban-0.0.33.tar.gz"
+GITFILE = forban.tar.gz
 WGET = wget -c
 FORBANFOLDER = forban-src
 IMAGE_FILE=forban_img.gz
@@ -40,9 +40,9 @@ $(FORBANFOLDER):
 $(GITFILE):  $(FORBANFOLDER)
 	wget -c   $(GITURL)  -O $(GITFILE)
 	mv $@ $(FORBANFOLDER)
-	cd  $(FORBANFOLDER) && unzip $@ && mv -v  adulau-Forban*/* ./
-	ls $(FORBANFOLDER)/adulau-Forban* >  $(FORBANFOLDER)/version
-	rm -rv  $(FORBANFOLDER)/adulau-Forban*
+	cd  $(FORBANFOLDER) && tar xzf $@ && mv -v  forban-*/* ./
+	ls $(FORBANFOLDER)/forban-* >  $(FORBANFOLDER)/version
+	rm -rv  $(FORBANFOLDER)/forban-*
 	rm  $(FORBANFOLDER)/$(GITFILE)
 
 

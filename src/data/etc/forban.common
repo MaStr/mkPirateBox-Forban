@@ -186,7 +186,7 @@ forban_start() {
 
   cd $forban_mount
 
-  if [ "$forban_clean_up" == "yes"] ; then
+  if [ "$forban_clean_up" == "yes" ] ; then
       $forban_mount/bin/forbanctl cleanup  
   fi
 

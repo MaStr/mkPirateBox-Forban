@@ -196,6 +196,11 @@ forban_start() {
 
   nice -n 20 $forban_mount/bin/forbanctl start
 
+
+  [[ -e /opt/piratebox/src/forban_link.html ]] && \
+  	cp /opt/piratebox/src/forban_link.html /opt/piratebox/www
+           
+
 # Disabled ... don't know what to do with :(
 #  echo "Waiting 15 sec. startup... for enabling watchdog again"
 #  sleep 15 

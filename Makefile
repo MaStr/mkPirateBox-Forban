@@ -1,7 +1,7 @@
-VERSION = 0.33.1
+VERSION = 0.34.1
 NAME = piratebox-forban
 ARCH = all
-GITURL = "http://www.foo.be/forban/release/forban-0.0.33.tar.gz"
+GITURL = "http://www.foo.be/forban/release/forban-0.0.34.tar.gz"
 GITFILE = forban.tar.gz
 WGET = wget -c
 FORBANFOLDER = forban-src

@@ -36,3 +36,6 @@ Why is Forban running in shared mode on default (the following stuff is written 
 
 
 Switching to opportunistic mode?
+  * login and change /opt/forban/cfg/forban.cfg  modes line from "shared" to "opportunistic"
+  * Default download-to directory is the PirateBox-Shared folder
+

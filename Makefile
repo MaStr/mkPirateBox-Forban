@@ -1,4 +1,4 @@
-VERSION = 0.34.2
+VERSION = 0.34.3
 NAME = piratebox-forban
 ARCH = all
 GITURL = "http://www.foo.be/forban/release/forban-0.0.34.tar.gz"

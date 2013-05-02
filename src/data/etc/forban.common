@@ -10,6 +10,11 @@ forban_srcimg="$pb_usbmount/forban_img.tar.gz"
 forban_share="$pb_share" 
 forban_share_folder="$forban_mount/var/share"
 
+####Vars for setup piratebox stuff
+src_piratebox_forban_nolink=/opt/piratebox/src/no_link.html
+src_piratebox_forban_link=/opt/piratebox/src/forban.html
+dest_piratebox_www=/opt/piratebox/www/forban_link.html
+
 #Empty out Forban's cache about found hosts
 forban_reset_loot="no"
 
@@ -184,6 +189,9 @@ forban_start() {
   [ ! -e $forban_share_folder/PirateBox_Share ] && \
 	ln -s $forban_share  $forban_share_folder/PirateBox_Share
 
+  [ -f $src_piratebox_forban_link ] && \
+	cp $src_piratebox_forban_link $dest_piratebox_www
+  
   cd $forban_mount
 
   if [ "$forban_clean_up" == "yes" ] ; then
@@ -209,6 +217,10 @@ forban_start() {
 
 forban_stop() {
   # killing all piratebox processes
+  
+  [ -f $src_piratebox_forban_nolink ] && \
+     cp $src_piratebox_forban_nolink $dest_piratebox_www
+ 
 
   $forban_mount/bin/forbanctl stop
 
